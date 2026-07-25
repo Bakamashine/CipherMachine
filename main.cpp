@@ -50,14 +50,15 @@ int main()
     std::vector<int> narray = class_rand->generate_key(word.size());
 //    int narray_size = sizeof(narray)/sizeof(narray[0]);
 
-std::cout << "Key: ";
-std::stringstream stream;
-    for (int v : narray) {
+    std::cout << "Key: ";
+    std::stringstream stream;
+    for (int v : narray)
+    {
         std::cout << v;
         stream << v;
-        #ifdef DEBUG
+#ifdef DEBUG
         std::cout << v << "|";
-        #endif // DEBUG
+#endif // DEBUG
     }
     std::cout << std::endl;
 
@@ -96,12 +97,7 @@ std::stringstream stream;
         return -1;
     }
 
-//    delete chiphered_lower_vec;
-//    delete chiphered_upper_vec;
-    delete numbers;
-    delete ciph;
-    delete class_alph;
-    delete class_rand;
+
 
 
     if (__val.size() != narray.size())
@@ -114,18 +110,22 @@ std::stringstream stream;
         __val[i] *= narray[i];
     }
 
-    #ifdef DEBUG
+#ifdef DEBUG
     for  (ll v: __val)
     {
         std::cout << "v: " << v << std::endl;
     }
-    #endif
+#endif
 
     std::cout << "--------------Your text--------------" << std::endl;
     for (ll v: __val)
     {
-        std::cout << v;
+        std::cout << v << class_rand->get_random_symbol();
     }
     std::cout << " key: " << stream.str() << std::endl;
+    delete numbers;
+    delete ciph;
+    delete class_alph;
+    delete class_rand;
     return 0;
 }

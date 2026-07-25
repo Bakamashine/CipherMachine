@@ -29,8 +29,8 @@ int Randomizer::get_random_number()
 int Randomizer::get_random_number(int max)
 {
 
-        std::uniform_int_distribution<int> distrib(this->min, max);
-return distrib(gen);
+    std::uniform_int_distribution<int> distrib(this->min, max);
+    return distrib(gen);
 //    int old_max = this->max;
 //    this->max = max;
 //    int rand = this->get_random_number();
@@ -68,7 +68,8 @@ std::vector<int> Randomizer::generate_key(size_t size)
 
     std::vector<int> key;
     key.reserve(size);
-    for (size_t i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++)
+    {
         key.push_back(get_random_number(10000));
     }
     return key;
