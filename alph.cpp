@@ -1,13 +1,12 @@
-#include<sstream>
-#include <cstdio>
-#include <cstdlib>
+#include <sstream>
 #include <iostream>
 #include <stdexcept>
 #include "alph.hpp"
-#include <format>
-#include <iomanip>
 #include <vector>
 #include <cctype>
+#include <string>
+#include <iomanip>
+
 
 Alph::Alph(std::string &_alph, Randomizer &_rand): alph(_alph), link_rand(_rand)
 {

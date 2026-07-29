@@ -1,12 +1,9 @@
-#include <cstdio>
-#include <cstdlib>
 #include <iostream>
 #include "randomizer.hpp"
 #include "alph.hpp"
 #include "cipher.hpp"
-#include <iomanip>
 #include "numbers.hpp"
-//#include <windows.h>
+#include <sstream>
 
 
 using ll = long long;
