@@ -1,6 +1,6 @@
 #pragma once
 
-struct AlphHex
+struct AlphabetHex
 {
     char symbol;
     int value;

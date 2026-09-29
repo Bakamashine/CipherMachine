@@ -1,10 +1,9 @@
 #include <iostream>
-#include "randomizer.hpp"
-#include "alph.hpp"
-#include "cipher.hpp"
-#include "numbers.hpp"
+#include "randomizer.h"
+#include "alph.h"
+#include "cipher.h"
+#include "numbers.h"
 #include <sstream>
-
 
 using ll = long long;
 /**
@@ -31,21 +30,25 @@ random_value (on_array)
 */
 using namespace std;
 
-
-
-
 int main()
 {
 
     std::string word;
     std::cout << "Enter your word: ";
-    std::cin >> word;
+    getline(cin, word);
+#ifdef _DEBUG
+    std::cout << "Default word: " << word << std::endl;
+#endif
+    word.erase(
+        std::remove_if(word.begin(), word.end(), [](char c)
+                       { return c == ' ' || c == ',' || c == ';' || c == '!'; }),
+        word.end());
     std::string alph = "abcdefghijklmnopqrstuvwxyz";
-    Randomizer* class_rand = new Randomizer(alph);
-    Alph *class_alph = new Alph(alph, *class_rand);
+    Randomizer *class_rand = new Randomizer(alph);
+    Alphabet *class_alph = new Alphabet(alph, *class_rand);
 
-    std::vector<int> narray = class_rand->generate_key(word.size());
-//    int narray_size = sizeof(narray)/sizeof(narray[0]);
+    std::vector<int> narray = class_rand->generateKey(word.size());
+    //    int narray_size = sizeof(narray)/sizeof(narray[0]);
 
     std::cout << "Key: ";
     std::stringstream stream;
@@ -61,31 +64,29 @@ int main()
 
     std::cout << "Your word: " << word << std::endl;
 
-
-    std::string word_lower = class_alph->lowercase(&word);
-    std::string word_upper = class_alph->uppercase(&word);
+    std::string word_lower = class_alph->lowerCase(&word);
+    std::string word_upper = class_alph->upperCase(&word);
 #ifdef DEBUG
     std::cout << "word_low: " << word_lower << std::endl;
     std::cout << "word_upper: " << word_upper << std::endl;
 #endif // DEBUG
-    Cipher *ciph = new Cipher(word_upper, *class_alph);
+    Cipher *cipher = new Cipher(word_upper, *class_alph);
 
-
-    std::vector<std::string> chiphered_upper_vec = ciph->get_chiphered_vec();
-    std::vector<std::string> chiphered_lower_vec = ciph->set_word(word_lower)->get_chiphered_vec();
+    std::vector<std::string> ciphered_upper_vec = cipher->getCipheredVec();
+    std::vector<std::string> ciphered_lower_vec = cipher->setWord(word_lower)->getCipheredVec();
 
 #ifdef DEBUG
-    Alph::print_vector(chiphered_upper_vec);
-    Alph::print_vector(chiphered_lower_vec);
+    Alphabet::print_vector(ciphered_upper_vec);
+    Alphabet::print_vector(ciphered_lower_vec);
 #endif
 
-    Numbers* numbers = new Numbers();
+    Numbers *_numbers = new Numbers();
     std::vector<ll> __val;
-    if (chiphered_upper_vec.size() == chiphered_lower_vec.size())
+    if (ciphered_upper_vec.size() == ciphered_lower_vec.size())
     {
-        for(int i = 0; i<chiphered_lower_vec.size(); i++)
+        for (int i = 0; i < ciphered_lower_vec.size(); i++)
         {
-            __val.push_back(numbers->multiplication_hex(chiphered_lower_vec[i], chiphered_upper_vec[i]));
+            __val.push_back(_numbers->multiplicationHex(ciphered_lower_vec[i], ciphered_upper_vec[i]));
         }
     }
     else
@@ -94,34 +95,31 @@ int main()
         return -1;
     }
 
-
-
-
     if (__val.size() != narray.size())
     {
         return -2;
     }
 
-    for (int i = 0; i<__val.size(); i++)
+    for (int i = 0; i < __val.size(); i++)
     {
         __val[i] *= narray[i];
     }
 
 #ifdef DEBUG
-    for  (ll v: __val)
+    for (ll v : __val)
     {
         std::cout << "v: " << v << std::endl;
     }
 #endif
 
     std::cout << "--------------Your text--------------" << std::endl;
-    for (ll v: __val)
+    for (ll v : __val)
     {
-        std::cout << v << class_rand->get_random_symbol();
+        std::cout << v << class_rand->getRandomSymbol();
     }
     std::cout << " key: " << stream.str() << std::endl;
-    delete numbers;
-    delete ciph;
+    delete _numbers;
+    delete cipher;
     delete class_alph;
     delete class_rand;
     return 0;

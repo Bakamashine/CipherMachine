@@ -1,5 +1,5 @@
-#include "numbers.hpp"
-#include "structurs.hpp"
+#include "numbers.h"
+#include "structurs.h"
 #include <cstdlib>
 #include <cmath>
 #include <vector>
@@ -7,20 +7,20 @@
 
 Numbers::Numbers()
 {
-    this->numbers = new AlphHex[alph.size()];
-    for (int i = 0; i < alph.size(); i++)
+    this->_numbers = new AlphabetHex[_alph.size()];
+    for (int i = 0; i < _alph.size(); i++)
     {
-        this->numbers[i].symbol = alph[i];
-        this->numbers[i].value = 10 + i;
+        this->_numbers[i].symbol = _alph[i];
+        this->_numbers[i].value = 10 + i;
     }
 }
 
 Numbers::~Numbers()
 {
-    delete[] this->numbers;
+    delete[] this->_numbers;
 }
 
-long long Numbers::convert_to_standart(std::string val)
+long long Numbers::conToStandard(std::string val)
 {
     long long result = 0;
     long long power = 0;
@@ -28,11 +28,11 @@ long long Numbers::convert_to_standart(std::string val)
     for (int i = val.size() - 1; i >= 0; i--)
     {
         bool found = false;
-        for (int j = 0; j < alph.size(); j++)
+        for (int j = 0; j < _alph.size(); j++)
         {
-            if (val[i] == numbers[j].symbol)
+            if (val[i] == _numbers[j].symbol)
             {
-                result += numbers[j].value * pow(16, power);
+                result += _numbers[j].value * pow(16, power);
                 power++;
                 found = true;
                 break;
@@ -48,7 +48,7 @@ long long Numbers::convert_to_standart(std::string val)
     return result;
 }
 
-long long Numbers::multiplication_hex(std::string v1, std::string v2)
+long long Numbers::multiplicationHex(std::string v1, std::string v2)
 {
-    return this->convert_to_standart(v1) * this->convert_to_standart(v2);
+    return this->conToStandard(v1) * this->conToStandard(v2);
 }

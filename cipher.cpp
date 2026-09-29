@@ -1,41 +1,38 @@
-#include "cipher.hpp"
+#include "cipher.h"
 #include <iostream>
 #include <string>
 
-Cipher::Cipher(std::string _word, Alph& al): word(_word), alph(al)
+Cipher::Cipher(std::string word, Alphabet &al) : _word(word), _alph(al)
 {
-
 }
 
-std::vector<std::string> Cipher::get_chiphered_vec()
+std::vector<std::string> Cipher::getCipheredVec()
 {
-    std::vector<std::string> chiphered_vec;
+    std::vector<std::string> ciphered_vec;
     std::string temp_str;
-    for (int i =0; i<word.size(); i++)
+    for (int i = 0; i < _word.size(); i++)
     {
-        temp_str = alph.get_utf8(static_cast<const char>(word[i]));
+        temp_str = _alph.get_utf8(static_cast<const char>(_word[i]));
 #ifdef DEBUG
         std::cout
-                << "Word: "
-                << word[i]
-                << "\t"
-                << temp_str
-                << std::endl;
+            << "Word: "
+            << _word[i]
+            << "\t"
+            << temp_str
+            << std::endl;
 //            if (temp_str.size() > 4) {
 //                std::cout << "Not english alphabet" << std::end;
 //                return -1;
 //            }
 #endif
-        chiphered_vec.push_back(temp_str);
+        ciphered_vec.push_back(temp_str);
     }
 
-    return chiphered_vec;
+    return ciphered_vec;
 }
 
-Cipher* Cipher::set_word(std::string _val)
+Cipher *Cipher::setWord(std::string val)
 {
-    word = _val;
+    _word = val;
     return this;
 }
-
-

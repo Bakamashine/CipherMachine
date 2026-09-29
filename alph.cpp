@@ -1,23 +1,21 @@
 #include <sstream>
 #include <iostream>
 #include <stdexcept>
-#include "alph.hpp"
+#include "alph.h"
 #include <vector>
 #include <cctype>
 #include <string>
 #include <iomanip>
 
-
-Alph::Alph(std::string &_alph, Randomizer &_rand): alph(_alph), link_rand(_rand)
+Alphabet::Alphabet(std::string &_alph, Randomizer &rand) : _alph(_alph), _link_rand(rand)
 {
-
 }
-std::string Alph::get_utf8(const char val)
+std::string Alphabet::get_utf8(const char val)
 {
 
     std::stringstream str_stream;
     std::u8string utf8_char(1, val);
-//    for (unsigned char byte : val) {
+    //    for (unsigned char byte : val) {
     for (char8_t byte : utf8_char)
     {
         str_stream << "0x"
@@ -31,21 +29,20 @@ std::string Alph::get_utf8(const char val)
     return str_stream.str();
 }
 
-std::string Alph::get_utf8_by_index(int val)
+std::string Alphabet::get_utf8_by_index(int val)
 {
-    if (val > alph.size())
+    if (val > _alph.size())
     {
         throw std::invalid_argument("Val greater than array size");
     }
-    return get_utf8(alph[val]);
-//    return get_utf8(std::string_view(&alph[val], 1));
-
+    return get_utf8(_alph[val]);
+    //    return get_utf8(std::string_view(&_alph[val], 1));
 }
-int Alph::get_index(char value)
+int Alphabet::get_index(char value)
 {
-    for (int i = 0; i < alph.size(); i++)
+    for (int i = 0; i < _alph.size(); i++)
     {
-        if (alph[i] == value)
+        if (_alph[i] == value)
         {
             return i;
         }
@@ -53,51 +50,50 @@ int Alph::get_index(char value)
     return -1;
 }
 
-void Alph::print_vector(std::vector<std::string>& vec)
+void Alphabet::print_vector(std::vector<std::string> &vec)
 {
-    for (int i = 0; i<vec.size(); i++)
+    for (int i = 0; i < vec.size(); i++)
     {
         std::cout << vec[i] << "|";
     }
     std::cout << std::endl;
-
 }
 
-std::string Alph::get_alph()
+std::string Alphabet::getAlphabet()
 {
-    return alph;
+    return _alph;
 }
-//void Alph::set_uppercase_alph()
+// void Alphabet::set_uppercase_alph()
 //{
-//    for(char& val : alph)
-//    {
-//        val = static_cast<char>(std::toupper(static_cast<unsigned char>(val)));
-//    }
+//     for(char& val : _alph)
+//     {
+//         val = static_cast<char>(std::toupper(static_cast<unsigned char>(val)));
+//     }
 //
-//}
-//void Alph::set_lowercase_alph()
+// }
+// void Alphabet::set_lowercase_alph()
 //{
-//    for(char& val : alph)
-//    {
-//        val = static_cast<char>(std::tolower(static_cast<unsigned char>(val)));
-//    }
+//     for(char& val : _alph)
+//     {
+//         val = static_cast<char>(std::tolower(static_cast<unsigned char>(val)));
+//     }
 //
-//}
+// }
 
-std::string Alph::uppercase(const std::string* _val)
+std::string Alphabet::upperCase(const std::string *_val)
 {
     std::string new_str;
-    for(char val : *_val)
+    for (char val : *_val)
     {
         new_str += static_cast<char>(std::toupper(static_cast<unsigned char>(val)));
     }
     return new_str;
 }
 
-std::string Alph::lowercase(const std::string* _val)
+std::string Alphabet::lowerCase(const std::string *_val)
 {
     std::string new_str;
-    for(char val : *_val)
+    for (char val : *_val)
     {
         new_str += static_cast<char>(std::tolower(static_cast<unsigned char>(val)));
     }
