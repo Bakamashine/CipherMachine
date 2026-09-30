@@ -57,7 +57,7 @@ int main()
         std::cout << "Enter your text: ";
         getline(cin, text);
 #ifdef _DEBUG
-        std::cout << "Default text: " << text << std::endl;
+        std::cout << "[DEBUG] Default text: " << text << std::endl;
 #endif
         REMOVE_SYMBOLS(text);
     }
@@ -84,7 +84,7 @@ int main()
         std::cout << v;
         stream << v;
 #ifdef DEBUG
-        std::cout << v << "|";
+        std::cout << "[DEBUG] " << v << "|";
 #endif // DEBUG
     }
     std::cout << std::endl;
@@ -94,8 +94,8 @@ int main()
     std::string word_lower = class_alph->lowerCase(&text);
     std::string word_upper = class_alph->upperCase(&text);
 #ifdef DEBUG
-    std::cout << "word_low: " << word_lower << std::endl;
-    std::cout << "word_upper: " << word_upper << std::endl;
+    std::cout << "[DEBUG] word_low: " << word_lower << std::endl;
+    std::cout << "[DEBUG] word_upper: " << word_upper << std::endl;
 #endif // DEBUG
     Cipher *cipher = new Cipher(word_upper, *class_alph);
 
@@ -103,8 +103,10 @@ int main()
     std::vector<std::string> ciphered_lower_vec = cipher->setWord(word_lower)->getCipheredVec();
 
 #ifdef DEBUG
+	std::cout << "---[DEBUG]---" << std::endl;
     Alphabet::print_vector(ciphered_upper_vec);
     Alphabet::print_vector(ciphered_lower_vec);
+	std::cout << "-[END_DEBUG]-" << std::endl;
 #endif
 
     Numbers *_numbers = new Numbers();
@@ -135,7 +137,7 @@ int main()
 #ifdef DEBUG
     for (ll v : __val)
     {
-        std::cout << "v: " << v << std::endl;
+        std::cout << "[DEBUG] v: " << v << std::endl;
     }
 #endif
 
@@ -149,6 +151,10 @@ int main()
     if (in.is_open())
     {
         out << final_str_stream.str();
+    }
+    else 
+    {
+	std::cout << final_str_stream.str() << std::endl;
     }
     in.close();
     out.close();
