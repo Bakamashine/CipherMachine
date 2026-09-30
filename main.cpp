@@ -47,8 +47,7 @@ inline char isRemovableSymbol(char c)
 
 int main()
 {
-    std::ifstream in(input_file_name);
-    std::ofstream out(output_file_name, std::ios::out);
+    std::ifstream in(input_file_name);	
     std::string text;
 
     if (!in.is_open())
@@ -88,9 +87,9 @@ int main()
 #endif // DEBUG
     }
     std::cout << std::endl;
-
-    std::cout << "Your text: " << text << std::endl;
-
+#ifdef DEBUG
+    std::cout << "[DEBUG] Your text: " << text << std::endl;
+#endif
     std::string word_lower = class_alph->lowerCase(&text);
     std::string word_upper = class_alph->upperCase(&text);
 #ifdef DEBUG
@@ -150,14 +149,15 @@ int main()
     final_str_stream << " key: " << stream.str() << std::endl;
     if (in.is_open())
     {
+	std::ofstream out(output_file_name, std::ios::out);
         out << final_str_stream.str();
+	out.close();
     }
     else 
     {
 	std::cout << final_str_stream.str() << std::endl;
     }
     in.close();
-    out.close();
     delete _numbers;
     delete cipher;
     delete class_alph;
