@@ -4,7 +4,15 @@
 #include "cipher.h"
 #include "numbers.h"
 #include <sstream>
-
+#include <fstream>
+#define REMOVE_SYMBOLS(value)                              \
+    do                                                     \
+    {                                                      \
+        (value).erase(                                     \
+            std::remove_if((value).begin(), (value).end(), \
+                           isRemovableSymbol),             \
+            (value).end());                                \
+    } while (0)
 using ll = long long;
 /**
     ������ �����: ���� (PINYA)
@@ -29,25 +37,44 @@ random_value (on_array)
     D0AF | D09D | D0AB | D09F
 */
 using namespace std;
+const std::string input_file_name = "input.txt";
+const std::string output_file_name = "output.txt";
+
+inline char isRemovableSymbol(char c)
+{
+    return c == ' ' || c == ',' || c == ';' || c == '!' || c == '\n';
+}
 
 int main()
 {
+    std::ifstream in(input_file_name);
+    std::ofstream out(output_file_name, std::ios::out);
+    std::string text;
 
-    std::string word;
-    std::cout << "Enter your word: ";
-    getline(cin, word);
+    if (!in.is_open())
+    {
+        std::cout << "File is not found: " << input_file_name << std::endl;
+        std::cout << "Enter your text: ";
+        getline(cin, text);
 #ifdef _DEBUG
-    std::cout << "Default word: " << word << std::endl;
+        std::cout << "Default text: " << text << std::endl;
 #endif
-    word.erase(
-        std::remove_if(word.begin(), word.end(), [](char c)
-                       { return c == ' ' || c == ',' || c == ';' || c == '!'; }),
-        word.end());
+        REMOVE_SYMBOLS(text);
+    }
+    else
+    {
+        std::string temp_str;
+        while (std::getline(in, temp_str))
+        {
+            REMOVE_SYMBOLS(temp_str);
+            text += temp_str;
+        }
+    }
     std::string alph = "abcdefghijklmnopqrstuvwxyz";
     Randomizer *class_rand = new Randomizer(alph);
     Alphabet *class_alph = new Alphabet(alph, *class_rand);
 
-    std::vector<int> narray = class_rand->generateKey(word.size());
+    std::vector<int> narray = class_rand->generateKey(text.size());
     //    int narray_size = sizeof(narray)/sizeof(narray[0]);
 
     std::cout << "Key: ";
@@ -62,10 +89,10 @@ int main()
     }
     std::cout << std::endl;
 
-    std::cout << "Your word: " << word << std::endl;
+    std::cout << "Your text: " << text << std::endl;
 
-    std::string word_lower = class_alph->lowerCase(&word);
-    std::string word_upper = class_alph->upperCase(&word);
+    std::string word_lower = class_alph->lowerCase(&text);
+    std::string word_upper = class_alph->upperCase(&text);
 #ifdef DEBUG
     std::cout << "word_low: " << word_lower << std::endl;
     std::cout << "word_upper: " << word_upper << std::endl;
@@ -112,12 +139,19 @@ int main()
     }
 #endif
 
-    std::cout << "--------------Your text--------------" << std::endl;
+    std::stringstream final_str_stream;
+    final_str_stream << "--------------Your text--------------" << std::endl;
     for (ll v : __val)
     {
-        std::cout << v << class_rand->getRandomSymbol();
+        final_str_stream << v << class_rand->getRandomSymbol();
     }
-    std::cout << " key: " << stream.str() << std::endl;
+    final_str_stream << " key: " << stream.str() << std::endl;
+    if (in.is_open())
+    {
+        out << final_str_stream.str();
+    }
+    in.close();
+    out.close();
     delete _numbers;
     delete cipher;
     delete class_alph;
