@@ -1,7 +1,7 @@
 #include <sstream>
 #include <iostream>
 #include <stdexcept>
-#include "alph.h"
+#include "alph.hpp"
 #include <vector>
 #include <cctype>
 #include <string>

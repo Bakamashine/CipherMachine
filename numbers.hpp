@@ -1,6 +1,6 @@
 #pragma once
 
-#include "structurs.h"
+#include "structurs.hpp"
 #include <string>
 
 class Numbers

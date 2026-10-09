@@ -1,5 +1,5 @@
-#include "numbers.h"
-#include "structurs.h"
+#include "numbers.hpp"
+#include "structurs.hpp"
 #include <cstdlib>
 #include <cmath>
 #include <vector>

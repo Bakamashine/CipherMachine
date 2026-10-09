@@ -1,5 +1,5 @@
 #pragma once
-#include "randomizer.h"
+#include "randomizer.hpp"
 #include <vector>
 class Alphabet
 {

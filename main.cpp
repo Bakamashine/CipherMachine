@@ -1,8 +1,8 @@
 #include <iostream>
-#include "randomizer.h"
-#include "alph.h"
-#include "cipher.h"
-#include "numbers.h"
+#include "randomizer.hpp"
+#include "alph.hpp"
+#include "cipher.hpp"
+#include "numbers.hpp"
 #include <sstream>
 #include <fstream>
 #define REMOVE_SYMBOLS(value)                              \
